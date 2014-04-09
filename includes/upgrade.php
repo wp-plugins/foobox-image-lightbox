@@ -30,4 +30,6 @@
 		<li>A license to suit your budget</li>
 		<li>85+ settings to customize to your heart's content</li>
 	</ul>
+	
+	<p>Check out the <a target="_blank" href="http://fooplugins.com/foobox-feature-comparison/?utm_source=fooboxfreeplugin&utm_medium=fooboxcomparelink&utm_campaign=foobox_free_pro_tab">full feature comparison</a>.</p>
 </div>

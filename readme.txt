@@ -41,9 +41,7 @@ FooBox was the first lightbox to take responsive layout seriously. Not only does
 *	WooCommerce product images
 *	JetPack Tiled Gallery
 
-**Support**
-
-Support will be limited on the WP.org forums, with more dedicated and speedier support via [FooPlugins Support](http://fooplugins.com/plugins/foobox-free/?utm_source=fooboxfreeplugin&utm_medium=fooboxfreeprolink&utm_campaign=foobox_free_wprepo)
+Check out the [full feature comparison](http://fooplugins.com/foobox-feature-comparison/?utm_source=fooboxfreeplugin&utm_medium=fooboxcomparelink&utm_campaign=foobox_free_wprepo).
 
 == Installation ==
 
