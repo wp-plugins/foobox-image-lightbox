@@ -67,6 +67,8 @@ There is a setting to try and disable hard coded lightboxes, but this is not a s
 
 == Changelog ==
 
+= 1.0.2.1 =
+* Fixed jQuery dependency issue with themes that do not load jQuery by default
 = 1.0.2 =
 * Added setting "Show Captions On Hover"
 * Added "FooBot Says..." tab on settings page

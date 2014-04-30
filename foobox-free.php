@@ -3,7 +3,7 @@
 Plugin Name: FooBox Free Image Lightbox
 Plugin URI: http://fooplugins.com/plugins/foobox/
 Description: The best responsive image lightbox for WordPress.
-Version: 1.0.2
+Version: 1.0.2.1
 Author: FooPlugins
 Author URI: http://fooplugins.com
 License: GPL2
@@ -21,7 +21,7 @@ if (!class_exists('Foobox_Free')) {
 	define( 'FOOBOXFREE_PATH', plugin_dir_path( __FILE__ ));
 	define( 'FOOBOXFREE_URL', plugin_dir_url( __FILE__ ));
 	define( 'FOOBOXFREE_FILE', __FILE__ );
-	define( 'FOOBOXFREE_VERSION', '1.0.2' );
+	define( 'FOOBOXFREE_VERSION', '1.0.2.1' );
 
 	// Includes
 	require_once FOOBOXFREE_PATH . "includes/class-settings.php";
@@ -148,7 +148,7 @@ if (!class_exists('Foobox_Free')) {
 		function frontend_print_scripts() {
 			$this->register_and_enqueue_js(
 				$file = self::JS,
-				$d = 'jquery',
+				$d = array('jquery'),
 				$v = false,
 				$f = false);
 		}
