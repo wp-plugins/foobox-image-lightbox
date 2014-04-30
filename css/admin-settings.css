@@ -120,3 +120,7 @@ ul.foobox_features.single_column li {
 #upgrade_tab td, #upgrade_tab th {
 	padding:0 !important;
 }
+
+#foobot_says_tab tr:first-child {
+	display: none !important;
+}

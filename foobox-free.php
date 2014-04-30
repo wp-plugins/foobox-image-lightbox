@@ -3,7 +3,7 @@
 Plugin Name: FooBox Free Image Lightbox
 Plugin URI: http://fooplugins.com/plugins/foobox/
 Description: The best responsive image lightbox for WordPress.
-Version: 1.0.1
+Version: 1.0.2
 Author: FooPlugins
 Author URI: http://fooplugins.com
 License: GPL2
@@ -21,7 +21,7 @@ if (!class_exists('Foobox_Free')) {
 	define( 'FOOBOXFREE_PATH', plugin_dir_path( __FILE__ ));
 	define( 'FOOBOXFREE_URL', plugin_dir_url( __FILE__ ));
 	define( 'FOOBOXFREE_FILE', __FILE__ );
-	define( 'FOOBOXFREE_VERSION', '1.0.1' );
+	define( 'FOOBOXFREE_VERSION', '1.0.2' );
 
 	// Includes
 	require_once FOOBOXFREE_PATH . "includes/class-settings.php";
@@ -78,6 +78,9 @@ if (!class_exists('Foobox_Free')) {
 			} else if ($type == 'upgrade') {
 				echo '</td></tr><tr valign="top"><td colspan="2">';
 				$this->render_upgrade_notice();
+			} else if ($type == 'foobot_says') {
+				echo '</td></tr><tr valign="top"><td colspan="2">';
+				$this->render_foobot_recommendations();
 			} else if ($type == 'poweredby') {
 				echo '<input readonly disabled type="checkbox" value="on" checked /><small>' . __('This cannot be turned off in the FREE version', 'foobox-free') . '</small>';
 			}
@@ -108,6 +111,10 @@ if (!class_exists('Foobox_Free')) {
 
 		function render_upgrade_notice() {
 			require_once FOOBOXFREE_PATH . "includes/upgrade.php";
+		}
+
+		function render_foobot_recommendations() {
+			require_once FOOBOXFREE_PATH . "includes/recommend.php";
 		}
 
 		function settings_sidebar() {

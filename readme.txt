@@ -4,7 +4,7 @@ Donate link: http://fooplugins.com
 Tags: lightbox,media,images,gallery,modal
 Requires at least: 3.5.1
 Tested up to: 3.9
-Stable tag: 1.0.0
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,12 @@ FooBox was the first lightbox to take responsive layout seriously. Not only does
 
 Check out the [full feature comparison](http://fooplugins.com/foobox-feature-comparison/?utm_source=fooboxfreeplugin&utm_medium=fooboxcomparelink&utm_campaign=foobox_free_wprepo).
 
+**Partners**
+
+FooBox works great with most themes and gallery plugins right out of the box. But some vendors go that extra mile to ensure 100% FooBox compatibility:
+
+* [CyberChimps.com](http://CyberChimps.com?utm_source=fooboxfreeplugin)
+
 == Installation ==
 
 1. Upload `foobox-free` folder to the `/wp-content/plugins/` directory
@@ -61,5 +67,9 @@ There is a setting to try and disable hard coded lightboxes, but this is not a s
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.2 =
+* Added setting "Show Captions On Hover"
+* Added "FooBot Says..." tab on settings page
+
+= 1.0.1 =
 * first version!

@@ -29,6 +29,7 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 			$close_overlay_click = self::is_option_checked( $fbx_options, 'close_overlay_click', true );
 			$show_count          = self::is_option_checked( $fbx_options, 'show_count', true );
 			$powered_by_link     = self::is_option_checked( $fbx_options, 'powered_by_link', false );
+			$captions_hover      = self::is_option_checked( $fbx_options, 'captions_show_on_hover', false );
 
 			//force to show the powered by link on the settings page, so the user can see what it will look like
 			if ( foo_check_plugin_settings_page( FOOBOXFREE_SLUG ) ) {
@@ -59,6 +60,9 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 			}
 			if ( !$show_count ) {
 				$options['showCount'] = 'showCount:false';
+			}
+			if ( $captions_hover ) {
+				$options['captions'] = 'captions: { onlyShowOnHover: true }';
 			}
 
 			$js_excludes[] = '.fbx-link';

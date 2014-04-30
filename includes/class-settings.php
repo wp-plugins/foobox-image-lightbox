@@ -112,6 +112,14 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 				'section' => 'settings',
 				'tab'     => 'general'
 			);
+			$settings[] = array(
+				'id'      => 'captions_show_on_hover',
+				'title'   => __( 'Show Captions On Hover', 'foobox-free' ),
+				'desc'    => __( 'Only show the caption when hovering over the image.', 'foobox-free' ),
+				'type'    => 'checkbox',
+				'section' => 'settings',
+				'tab'     => 'general'
+			);
 
 			$settings[] = array(
 				'id'      => 'error_message',
@@ -170,6 +178,17 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 					'tab'     => 'debug'
 				);
 			}
+			//endregion
+
+			//region 'FooBot Says' tab
+			$tabs['foobot_says'] = __('FooBot Says...', 'foobox-free');
+
+			$settings[] = array(
+				'id'    => 'upgrade',
+				'title' => __('', 'foobox-free'),
+				'type'  => 'foobot_says',
+				'tab'   => 'foobot_says'
+			);
 			//endregion
 
 			//region Upgrade tab
