@@ -67,6 +67,7 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 
 			$js_excludes[] = '.fbx-link';
 			$js_excludes[] = '.nofoobox';
+			$js_excludes[] = '.nolightbox';
 			$js_excludes[] = 'a[href*="pinterest.com/pin/create/button/"]';
 
 			$options['excludes'] = 'excludes:\'' . implode( ',', $js_excludes ) . '\'';
@@ -150,6 +151,10 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 				}
 			}
 
+			//add support for foogallery!
+			if ( class_exists('FooGallery_Plugin') ) {
+				$foobox_selectors[] = '.foogallery-container.foogallery-lightbox-foobox-free';
+			}
 			if ( self::is_option_checked( $fbx_options, 'disable_others', false ) ) {
 				$js .= '    $(".fbx-link").unbind(".prettyphoto").unbind(".fb");
 ';

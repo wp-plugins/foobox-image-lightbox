@@ -48,6 +48,7 @@ Check out the [full feature comparison](http://fooplugins.com/foobox-feature-com
 FooBox works great with most themes and gallery plugins right out of the box. But some vendors go that extra mile to ensure 100% FooBox compatibility:
 
 * [CyberChimps.com](http://CyberChimps.com?utm_source=fooboxfreeplugin)
+* [Bottomless Design WordPress Themes](http://www.mojo-themes.com/user/bottomlessdesign)
 
 == Installation ==
 
@@ -67,8 +68,15 @@ There is a setting to try and disable hard coded lightboxes, but this is not a s
 
 == Changelog ==
 
+= 1.0.3 =
+* Added FooGallery support
+* Added .nolightbox to exclusions
+* Added .pot translation file
+* Added Bottomless design banner to "FooBot Says..." tab
+
 = 1.0.2.1 =
 * Fixed jQuery dependency issue with themes that do not load jQuery by default
+
 = 1.0.2 =
 * Added setting "Show Captions On Hover"
 * Added "FooBot Says..." tab on settings page

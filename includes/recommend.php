@@ -9,3 +9,7 @@
 <p>
 	<a target="_blank" href="http://cyberchimps.com"><img border="0" alt="CyberChimps Professional WordPress Themes" src="<?php echo FOOBOXFREE_URL; ?>/img/cyberchimps.jpg"></a>
 </p>
+<h3>Bottomless Design WordPress Themes</h3>
+<p>
+	<a target="_blank" href="http://www.mojo-themes.com/user/bottomlessdesign"><img border="0" alt="Responsive WordPress Themes" src="<?php echo FOOBOXFREE_URL; ?>/img/bottomless.jpg"></a>
+</p>

@@ -185,7 +185,7 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$settings[] = array(
 				'id'    => 'upgrade',
-				'title' => __('', 'foobox-free'),
+				'title' => '',
 				'type'  => 'foobot_says',
 				'tab'   => 'foobot_says'
 			);
