@@ -8,11 +8,13 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A responsive image lightbox for WordPress galleries
+A responsive image lightbox for WordPress galleries & [FooGallery](http://wordpress.org/plugins/foogallery/)
 
 == Description ==
 
 FooBox was the first lightbox to take responsive layout seriously. Not only does it scale images to look better on phones, but it rearranges it's button controls to look great in both portrait or landscape orientation.
+
+Works best with our free [FooGallery](http://wordpress.org/plugins/foogallery/) plugin.
 
 **Features**
 
@@ -47,8 +49,13 @@ Check out the [full feature comparison](http://fooplugins.com/foobox-feature-com
 
 FooBox works great with most themes and gallery plugins right out of the box. But some vendors go that extra mile to ensure 100% FooBox compatibility:
 
+* [FooGallery](http://foo.gallery)
 * [CyberChimps.com](http://CyberChimps.com?utm_source=fooboxfreeplugin)
 * [Bottomless Design WordPress Themes](http://www.mojo-themes.com/user/bottomlessdesign)
+
+**Translations**
+
+* [Serbo-Croatian by Borisa Djuraskovic](http://www.webhostinghub.com/)
 
 == Installation ==
 
