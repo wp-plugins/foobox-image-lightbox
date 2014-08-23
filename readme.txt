@@ -8,7 +8,7 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A responsive image lightbox for WordPress galleries & [FooGallery](http://wordpress.org/plugins/foogallery/)
+A responsive image lightbox for WordPress galleries & FooGallery
 
 == Description ==
 
