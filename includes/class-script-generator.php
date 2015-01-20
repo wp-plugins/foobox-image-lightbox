@@ -130,7 +130,7 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 				$js_options = 'FOOBOX.o';
 			}
 
-			$foobox_selectors = array();
+			$foobox_selectors[] = '.foobox';
 
 			if ( foo_check_plugin_settings_page( FOOBOXFREE_SLUG ) ) {
 				$foobox_selectors[] = '.demo-gallery,.bad-image';
@@ -153,6 +153,7 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 
 			//add support for foogallery!
 			if ( class_exists('FooGallery_Plugin') ) {
+				$foobox_selectors[] = '.foogallery-container.foogallery-lightbox-foobox';
 				$foobox_selectors[] = '.foogallery-container.foogallery-lightbox-foobox-free';
 			}
 			if ( self::is_option_checked( $fbx_options, 'disable_others', false ) ) {

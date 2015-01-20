@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FooBox Free Image Lightbox\n"
-"POT-Creation-Date: 2014-06-24 22:05+0200\n"
-"PO-Revision-Date: 2014-06-24 22:08+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2015-01-20 16:35+0200\n"
+"PO-Revision-Date: 2015-01-20 16:35+0200\n"
+"Last-Translator: Brad Vincent <brad@fooplugins.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
@@ -18,16 +18,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: foobox-free.php:85
+#: foobox-free.php:90
 msgid "This cannot be turned off in the FREE version"
 msgstr ""
 
-#: foobox-free.php:196
+#: foobox-free.php:207
+#, php-format
+msgid ""
+"Thanks for using %s, get 50%% off the PRO version by using the coupon %s!!"
+msgstr ""
+
+#: foobox-free.php:209
+#, php-format
+msgid "Also, did you know about our free %s plugin?"
+msgstr ""
+
+#: foobox-free.php:211
+msgid ""
+"It's an awesome new gallery plugin that supports image galleries and albums "
+"and integrates with FooBox seamlessly!"
+msgstr ""
+
+#: foobox-free.php:212
+msgid "Hide this notice"
+msgstr ""
+
+#: foobox-free.php:245
 msgid ""
 "Sorry, but you can't run the FREE and PRO version of FooBox at the same time!"
 msgstr ""
 
-#: includes/class-foogallery-foobox-free-extension.php:12
+#: includes/class-foogallery-foobox-free-extension.php:13
 msgid "FooBox Free"
 msgstr ""
 

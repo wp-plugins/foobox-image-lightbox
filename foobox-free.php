@@ -3,7 +3,7 @@
 Plugin Name: FooBox Free Image Lightbox
 Plugin URI: http://fooplugins.com/plugins/foobox/
 Description: The best responsive image lightbox for WordPress.
-Version: 1.0.3
+Version: 1.0.4
 Author: FooPlugins
 Author URI: http://fooplugins.com
 License: GPL2
@@ -21,7 +21,7 @@ if (!class_exists('Foobox_Free')) {
 	define( 'FOOBOXFREE_PATH', plugin_dir_path( __FILE__ ));
 	define( 'FOOBOXFREE_URL', plugin_dir_url( __FILE__ ));
 	define( 'FOOBOXFREE_FILE', __FILE__ );
-	define( 'FOOBOXFREE_VERSION', '1.0.3' );
+	define( 'FOOBOXFREE_VERSION', '1.0.4' );
 
 	// Includes
 	require_once FOOBOXFREE_PATH . "includes/class-settings.php";
@@ -53,10 +53,14 @@ if (!class_exists('Foobox_Free')) {
 			$this->init( FOOBOXFREE_FILE, FOOBOXFREE_SLUG, FOOBOXFREE_VERSION, 'FooBox FREE' );
 
 			if (is_admin()) {
+
 				add_action('admin_head', array($this, 'admin_inline_content'));
 				add_action('foobox-free-settings_custom_type_render', array($this, 'custom_admin_settings_render'));
 				add_action('foobox-free-settings-sidebar', array($this, 'settings_sidebar'));
 				new FooBox_Free_Settings();
+				add_action('admin_notices', array($this, 'admin_notice'));
+				add_action('admin_init', array($this, 'admin_notice_ignore'));
+
 			} else {
 
 				// Render JS to the front-end pages
@@ -182,6 +186,50 @@ if (!class_exists('Foobox_Free')) {
 				};
 			</script>
 		<?php
+		}
+
+		function admin_notice() {
+			if ( current_user_can( 'activate_plugins' ) ) {
+				if ( ! get_user_meta( get_current_user_id(), 'foogallery_did_you_know' ) ) {
+					$image_url = FOOBOXFREE_URL . 'img/';
+					?>
+					<style>
+						.foobox-admin-notice-wrapper { margin-top: 10px; display: table; }
+						.foobox-admin-notice { display:table-cell; height: 100px; background: url(<?php echo $image_url; ?>foobot-speech-bubble-middle.png) repeat-x; position: relative; }
+						.foobox-admin-notice-start { display:table-cell; width:108px; height: 100px; background: url(<?php echo $image_url; ?>foobot-speech-bubble.png) no-repeat; }
+						.foobox-admin-notice-end { display:table-cell; width:13px; height: 100px; background: url(<?php echo $image_url; ?>foobot-speech-bubble-end.png) no-repeat; }
+						.foobox-admin-notice p { margin: 0; padding:12px; height: 100px; overflow: hidden; }
+						.foobox-admin-notice-close { position: absolute; right: 0; top: 2px; width:20px; color: #000; margin-right:-12px; font-size:16px; font-weight:bold; text-decoration: none; }
+					</style>
+					<div class="foobox-admin-notice-wrapper">
+					<div class="foobox-admin-notice-start"></div>
+					<div class="foobox-admin-notice"><p>
+					<?php printf( __('Thanks for using %s, get 50%% off the PRO version by using the coupon %s!!', 'foobox-free'), '<strong>FooBox</strong>', '<strong><a target="_blank" href="http://fooplugins.com/plugins/foobox/?utm_source=fooboxfreeplugin&utm_medium=fooboxfreeprolink&utm_campaign=foobox_free_admin_notice">FOOBOXPRO50</a></strong>' ); ?>
+					<br /><br />
+					<?php printf( __('Also, did you know about our free %s plugin?', 'foobox-free' ), '<strong><a target="_blank" href="http://foo.gallery">FooGallery</a></strong>' ); ?>
+					<br />
+					<?php _e('It\'s an awesome new gallery plugin that supports image galleries and albums and integrates with FooBox seamlessly!', 'foobox-free' ); ?>
+					</p><a title="<?php _e('Hide this notice', 'foobox-free'); ?>" href="<?php echo add_query_arg( 'foogallery_did_you_know_ignore', '0' ); ?>" class="foobox-admin-notice-close">&#10006;</a></div>
+					<div class="foobox-admin-notice-end"></div>
+					<div style="clear:both"></div>
+					</div><?php
+				}
+			}
+		}
+
+		function admin_notice_ignore() {
+			/* If user clicks to dismiss the notice, add that to their user meta */
+			if ( isset($_GET['foogallery_did_you_know_ignore']) && '0' == $_GET['foogallery_did_you_know_ignore'] ) {
+				add_user_meta( get_current_user_id(), 'foogallery_did_you_know', 'true', true);
+				/* Gets where the user came from after they click Hide Notice */
+				if ( wp_get_referer() ) {
+					/* Redirects user to where they were before */
+					wp_safe_redirect( wp_get_referer() );
+				} else {
+					/* just in case */
+					wp_safe_redirect( admin_url() );
+				}
+			}
 		}
 	}
 }
