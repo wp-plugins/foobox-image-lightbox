@@ -3,7 +3,7 @@
 Plugin Name: FooBox Free Image Lightbox
 Plugin URI: http://fooplugins.com/plugins/foobox/
 Description: The best responsive image lightbox for WordPress.
-Version: 1.0.4
+Version: 1.0.5
 Author: FooPlugins
 Author URI: http://fooplugins.com
 License: GPL2
@@ -21,7 +21,7 @@ if (!class_exists('Foobox_Free')) {
 	define( 'FOOBOXFREE_PATH', plugin_dir_path( __FILE__ ));
 	define( 'FOOBOXFREE_URL', plugin_dir_url( __FILE__ ));
 	define( 'FOOBOXFREE_FILE', __FILE__ );
-	define( 'FOOBOXFREE_VERSION', '1.0.4' );
+	define( 'FOOBOXFREE_VERSION', '1.0.5' );
 
 	// Includes
 	require_once FOOBOXFREE_PATH . "includes/class-settings.php";
@@ -209,7 +209,7 @@ if (!class_exists('Foobox_Free')) {
 					<?php printf( __('Also, did you know about our free %s plugin?', 'foobox-free' ), '<strong><a target="_blank" href="http://foo.gallery">FooGallery</a></strong>' ); ?>
 					<br />
 					<?php _e('It\'s an awesome new gallery plugin that supports image galleries and albums and integrates with FooBox seamlessly!', 'foobox-free' ); ?>
-					</p><a title="<?php _e('Hide this notice', 'foobox-free'); ?>" href="<?php echo add_query_arg( 'foogallery_did_you_know_ignore', '0' ); ?>" class="foobox-admin-notice-close">&#10006;</a></div>
+					</p><a title="<?php _e('Hide this notice', 'foobox-free'); ?>" href="<?php echo esc_url( add_query_arg( 'foogallery_did_you_know_ignore', '0' ) ); ?>" class="foobox-admin-notice-close">&#10006;</a></div>
 					<div class="foobox-admin-notice-end"></div>
 					<div style="clear:both"></div>
 					</div><?php
