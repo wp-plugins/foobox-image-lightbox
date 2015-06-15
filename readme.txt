@@ -76,6 +76,9 @@ There is a setting to try and disable hard coded lightboxes, but this is not a s
 
 == Changelog ==
 
+= 1.0.6 =
+* Fixed navbar issues in Chrome on IOS
+
 = 1.0.5 =
 * Fixed very minor vulnerability with add_query_arg function used in admin plugins page
 

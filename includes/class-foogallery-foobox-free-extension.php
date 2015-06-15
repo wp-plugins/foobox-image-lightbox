@@ -7,6 +7,10 @@ if ( !class_exists( 'FooGallery_FooBox_Free_Extension' ) ) {
 			//integration with FooGallery
 			add_filter( 'foogallery_gallery_template_field_lightboxes', array($this, 'add_lightbox') );
 			add_filter( 'foogallery_album_stack_link_class_name', array($this, 'album_stack_link_class_name'));
+
+			if ( class_exists( 'fooboxV2' ) ) {
+				throw new Exception("FooBox PRO is already running!");
+			}
 		}
 
 		function add_lightbox($lightboxes) {
