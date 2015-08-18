@@ -3,7 +3,7 @@ Contributors: bradvin, fooplugins
 Donate link: http://fooplugins.com
 Tags: lightbox,media,images,gallery,modal
 Requires at least: 3.5.1
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -75,6 +75,10 @@ There is a setting to try and disable hard coded lightboxes, but this is not a s
 2. Phone example
 
 == Changelog ==
+
+= 1.0.7 =
+* Updated to latest version of javascript and CSS files
+* Plays better with FooBox PRO now
 
 = 1.0.6 =
 * Fixed navbar issues in Chrome on IOS
