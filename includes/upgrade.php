@@ -15,12 +15,12 @@
 
 	<p>Out of the box support for the following galleries and plugins...</p>
 	<ul class="foobox_features tick2">
+		<li>FooGallery</li>
 		<li>Justified Image Grid</li>
 		<li>JetPack Tiled Gallery</li>
 		<li>NextGen</li>
 		<li>WooCommerce product images</li>
-		<li>Envira Gallery (coming soon)</li>
-		<li>FooGallery (coming soon)</li>
+		<li>Envira Gallery</li>
 	</ul>
 
 	<p>And also don't forget...</p>

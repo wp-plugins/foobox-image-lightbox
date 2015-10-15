@@ -51,7 +51,6 @@ Check out the [full feature comparison](http://fooplugins.com/foobox-feature-com
 FooBox works great with most themes and gallery plugins right out of the box. But some vendors go that extra mile to ensure 100% FooBox compatibility:
 
 * [FooGallery](http://foo.gallery)
-* [CyberChimps.com](http://CyberChimps.com?utm_source=fooboxfreeplugin)
 * [Bottomless Design WordPress Themes](http://www.mojo-themes.com/user/bottomlessdesign)
 
 **Translations**
@@ -75,6 +74,12 @@ There is a setting to try and disable hard coded lightboxes, but this is not a s
 2. Phone example
 
 == Changelog ==
+
+= 1.0.8 =
+* Updated to use latest FooBox JS
+* Added new Getting Started landing page on activation
+* Added support for wp.org language packs
+* Better FooGallery integration
 
 = 1.0.7 =
 * Updated to latest version of javascript and CSS files

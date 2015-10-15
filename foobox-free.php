@@ -3,11 +3,11 @@
 Plugin Name: FooBox Free Image Lightbox
 Plugin URI: http://fooplugins.com/plugins/foobox/
 Description: The best responsive image lightbox for WordPress.
-Version: 1.0.7
+Version: 1.0.8
 Author: FooPlugins
 Author URI: http://fooplugins.com
 License: GPL2
-Text Domain: foobox-free
+Text Domain: foobox-image-lightbox
 Domain Path: /languages
 */
 
@@ -21,7 +21,8 @@ if (!class_exists('Foobox_Free')) {
 	define( 'FOOBOXFREE_PATH', plugin_dir_path( __FILE__ ));
 	define( 'FOOBOXFREE_URL', plugin_dir_url( __FILE__ ));
 	define( 'FOOBOXFREE_FILE', __FILE__ );
-	define( 'FOOBOXFREE_VERSION', '1.0.7' );
+	define( 'FOOBOXFREE_VERSION', '1.0.8' );
+	define( 'FOOBOXFREE_ACTIVATION_REDIRECT_TRANSIENT_KEY', '_fooboxfree_activation_redirect' );
 
 	// Includes
 	require_once FOOBOXFREE_PATH . "includes/class-settings.php";
@@ -52,15 +53,27 @@ if (!class_exists('Foobox_Free')) {
 			//init FooPluginBase
 			$this->init( FOOBOXFREE_FILE, FOOBOXFREE_SLUG, FOOBOXFREE_VERSION, 'FooBox FREE' );
 
+			//register activation hook
+			register_activation_hook( __FILE__, array( 'Foobox_Free', 'activate' ) );
+
 			if (is_admin()) {
 
 				add_action('admin_head', array($this, 'admin_inline_content'));
 				add_action('foobox-free-settings_custom_type_render', array($this, 'custom_admin_settings_render'));
 				add_action('foobox-free-settings-sidebar', array($this, 'settings_sidebar'));
 				new FooBox_Free_Settings();
-				add_action('admin_notices', array($this, 'admin_notice'));
-				add_action('admin_init', array($this, 'admin_notice_ignore'));
+				add_action('admin_notices', array($this, 'admin_notice_upgrade'));
+				add_action('admin_init', array($this, 'admin_notice_upgrade_ignore'));
 				add_action('admin_init', array($this, 'deactivate_if_pro_activated'), 99);
+
+				add_action( 'admin_notices', array( $this, 'admin_notice_foogallery_lightboxes' ) );
+				add_action( 'wp_ajax_foobox_foogallery_lightboxes_ignore_notice', array( $this, 'admin_notice_foogallery_lightboxes_ignore' ) );
+				add_action( 'wp_ajax_foobox_foogallery_lightboxes_update', array( $this, 'admin_notice_foogallery_lightboxes_update' ) );
+				add_action( 'admin_print_scripts', array( $this, 'admin_notice_foogallery_lightboxes_inline_js' ), 999 );
+
+				add_action( 'plugins_loaded',  array( $this, 'new_version_check' ) );
+				add_action( 'admin_init', array( $this, 'check_for_redirect' ) );
+				add_action( 'admin_menu', array( $this, 'register_menu_items' ) );
 
 			} else {
 
@@ -84,11 +97,8 @@ if (!class_exists('Foobox_Free')) {
 			} else if ($type == 'upgrade') {
 				echo '</td></tr><tr valign="top"><td colspan="2">';
 				$this->render_upgrade_notice();
-			} else if ($type == 'foobot_says') {
-				echo '</td></tr><tr valign="top"><td colspan="2">';
-				$this->render_foobot_recommendations();
 			} else if ($type == 'poweredby') {
-				echo '<input readonly disabled type="checkbox" value="on" checked /><small>' . __('This cannot be turned off in the FREE version', 'foobox-free') . '</small>';
+				echo '<input readonly disabled type="checkbox" value="on" checked /><small>' . __('This cannot be turned off in the FREE version', 'foobox-image-lightbox') . '</small>';
 			}
 		}
 
@@ -117,10 +127,6 @@ if (!class_exists('Foobox_Free')) {
 
 		function render_upgrade_notice() {
 			require_once FOOBOXFREE_PATH . "includes/upgrade.php";
-		}
-
-		function render_foobot_recommendations() {
-			require_once FOOBOXFREE_PATH . "includes/recommend.php";
 		}
 
 		function settings_sidebar() {
@@ -189,16 +195,18 @@ if (!class_exists('Foobox_Free')) {
 		<?php
 		}
 
-		function admin_notice() {
+		function admin_notice_upgrade() {
+			if ( 'settings_page_fooboxfree-help' === foo_current_screen_id() )
+				return;
+
 			if ( current_user_can( 'activate_plugins' ) ) {
 				if ( ! get_user_meta( get_current_user_id(), 'foogallery_did_you_know2' ) ) {
 					$image_url = FOOBOXFREE_URL . 'img/';
 					?>
 					<style>
 						.foobox-admin-notice-wrapper { margin-top: 10px; display: table; }
-						.foobox-admin-notice-wrapper > div { vertical-align:top; }
+						.foobox-admin-notice-wrapper > div { vertical-align: middle; text-align: center; }
 						.foobox-admin-notice {
-							padding: 2px 20px 2px 10px;
 							display: table-cell;
 							position: relative;
 							margin: 0;
@@ -208,6 +216,8 @@ if (!class_exists('Foobox_Free')) {
 							-webkit-border-radius: 10px;
 							-moz-border-radius: 10px;
 							border-radius: 10px;
+							line-height: 0.8em;
+							padding:5px;
 						}
 						.foobox-admin-notice:before {
 							content: "";
@@ -255,29 +265,33 @@ if (!class_exists('Foobox_Free')) {
 					<div class="foobox-admin-notice-wrapper">
 					<div class="foobox-admin-notice-start"></div>
 					<div class="foobox-admin-notice">
-					<?php printf( __('Thanks for using %s, get 35%% off the PRO version by using the coupon %s!!', 'foobox-free'), '<strong>FooBox</strong>', '<strong><a target="_blank" href="http://fooplugins.com/plugins/foobox/?utm_source=fooboxfreeplugin&utm_medium=fooboxfreeprolink&utm_campaign=foobox_free_admin_notice">FOOBOXPRO35</a></strong>' ); ?>
-					<?php if ( !class_exists( 'FooGallery_Plugin' ) ) { ?>
-					<br /><br />
-					<?php printf( __('Also, did you know about our free %s plugin?', 'foobox-free' ), '<strong><a target="_blank" href="http://foo.gallery">FooGallery</a></strong>' ); ?>
-					<?php _e('It\'s an awesome new gallery plugin that supports image galleries and albums and integrates with FooBox seamlessly!', 'foobox-free' ); ?>
-					<?php } ?>
-					<a class="foobox-admin-notice-close" title="<?php _e('Hide this notice', 'foobox-free'); ?>" href="<?php echo esc_url( add_query_arg( 'foogallery_did_you_know_ignore', '0' ) ); ?>">&times;</a></div>
+						<?php printf( __('Thanks for using %s, get 35%% off the PRO version by using the coupon %s', 'foobox-image-lightbox'), '<strong>FooBox</strong>', '<strong><a target="_blank" href="http://fooplugins.com/plugins/foobox/?utm_source=fooboxfreeplugin&utm_medium=fooboxfreeprolink&utm_campaign=foobox_free_admin_notice">FOOBOXPRO35</a></strong>' ); ?>
+						<br />
+
+						<h3><?php _e('Would you like to create image and video galleries easier than ever before?', 'foobox-image-lightbox' ); ?></h3>
+
+						<?php printf( __('Try our free %s plugin and our premium %s extension, which both work beautifully with FooBox!', 'foobox-image-lightbox' ),
+							'<strong><a target="_blank" href="http://foo.gallery?utm_source=fooboxfreeplugin&utm_medium=fooboxfreeprolink&utm_campaign=foobox_free_admin_notice">FooGallery</a></strong>',
+							'<strong><a target="_blank" href="http://fooplugins.com/plugins/foovideo?utm_source=fooboxfreeplugin&utm_medium=fooboxfreefoovideolink&utm_campaign=foobox_free_admin_notice">FooVideo</a></strong>'); ?>
+						<a class="foobox-admin-notice-close" title="<?php _e('Hide this notice', 'foobox-image-lightbox'); ?>" href="<?php echo esc_url( add_query_arg( 'foogallery_did_you_know_ignore', '0' ) ); ?>">&times;</a></div>
 					</div><?php
 				}
 			}
 		}
 
-		function admin_notice_ignore() {
-			/* If user clicks to dismiss the notice, add that to their user meta */
-			if ( isset($_GET['foogallery_did_you_know_ignore']) && '0' == $_GET['foogallery_did_you_know_ignore'] ) {
-				add_user_meta( get_current_user_id(), 'foogallery_did_you_know2', 'true', true);
-				/* Gets where the user came from after they click Hide Notice */
-				if ( wp_get_referer() ) {
-					/* Redirects user to where they were before */
-					wp_safe_redirect( wp_get_referer() );
-				} else {
-					/* just in case */
-					wp_safe_redirect( admin_url() );
+		function admin_notice_upgrade_ignore() {
+			if ( current_user_can( 'activate_plugins' ) ) {
+				/* If user clicks to dismiss the notice, add that to their user meta */
+				if ( isset( $_GET['foogallery_did_you_know_ignore'] ) && '0' == $_GET['foogallery_did_you_know_ignore'] ) {
+					add_user_meta( get_current_user_id(), 'foogallery_did_you_know2', 'true', true );
+					/* Gets where the user came from after they click Hide Notice */
+					if ( wp_get_referer() ) {
+						/* Redirects user to where they were before */
+						wp_safe_redirect( wp_get_referer() );
+					} else {
+						/* just in case */
+						wp_safe_redirect( admin_url() );
+					}
 				}
 			}
 		}
@@ -285,8 +299,207 @@ if (!class_exists('Foobox_Free')) {
 		function deactivate_if_pro_activated() {
 			if (class_exists('fooboxV2')) {
 				deactivate_plugins( plugin_basename(__FILE__) ); // Deactivate me - FooBox PRO is running!
-				wp_die( __('FooBox FREE was deactivated, as FooBox PRO is now running!', 'foobox-free') . ' <a href="' . wp_get_referer() . '">' . __('Back to safety', 'foobox-free'). '</a>' );
+				wp_die( __('FooBox FREE was deactivated, as FooBox PRO is now running!', 'foobox-image-lightbox') . ' <a href="' . wp_get_referer() . '">' . __('Back to safety', 'foobox-image-lightbox'). '</a>' );
 			}
+		}
+
+		function admin_notice_foogallery_lightboxes() {
+			if ( ! current_user_can( 'activate_plugins' ) || ! class_exists( 'FooGallery_Plugin' ) )
+				return;
+
+			if ( !get_user_meta( get_current_user_id(), 'foogallery_fooboxfree_lightbox_ignore' ) ) {
+				$galleries = foogallery_get_all_galleries();
+				$gallery_count = 0;
+				foreach ( $galleries as $gallery ) {
+					$template = $gallery->gallery_template;
+					$lightbox = $gallery->get_meta( "{$template}_lightbox", 'none' );
+					if ( strpos( $lightbox, 'foobox-free' ) === false ) {
+						$gallery_count++;
+					}
+				}
+
+				if ( $gallery_count > 0 ) {
+					?>
+					<style>
+						.foobox-foogallery-lightboxes .spinner {
+							float: none;
+							margin: 0 10px;;
+						}
+
+
+					</style>
+					<div class="foobox-foogallery-lightboxes notice error is-dismissible">
+						<p>
+							<strong><?php _e( 'FooBox + FooGallery Alert : ', 'foobox-image-lightbox' ); ?></strong>
+							<?php echo sprintf( _n( 'We noticed that you have 1 FooGallery that is NOT using FooBox!', 'We noticed that you have %s FooGalleries that are NOT using FooBox!', $gallery_count, 'foobox-image-lightbox' ), $gallery_count ); ?>
+
+							<a class="foobox-foogallery-update-lightbox"
+							   href="#update_galleries"><?php echo _n( 'Update it to use FooBox now!', 'Update them to use FooBox now!', $gallery_count, 'foobox-image-lightbox' ); ?></a>
+							<span class="spinner"></span>
+						</p>
+					</div>
+					<?php
+				}
+			}
+		}
+
+		function admin_notice_foogallery_lightboxes_ignore() {
+			if ( check_admin_referer( 'foobox_foogallery_lightboxes_ignore_notice' ) ) {
+				add_user_meta( get_current_user_id(), 'foogallery_fooboxfree_lightbox_ignore', 'true', true );
+			}
+		}
+
+		function admin_notice_foogallery_lightboxes_update() {
+			if ( check_admin_referer( 'foobox_foogallery_lightboxes_update', 'foobox_foogallery_lightboxes_update_nonce' ) ) {
+				//update all galleries to use foobox!
+				$galleries = foogallery_get_all_galleries();
+				$gallery_update_count = 0;
+				foreach ( $galleries as $gallery ) {
+					$template = $gallery->gallery_template;
+					$meta_key = "{$template}_lightbox";
+					$lightbox = $gallery->get_meta( $meta_key, 'none' );
+					if ( strpos( $lightbox, 'foobox' ) === false ) {
+						$gallery->settings[$meta_key] = 'foobox-free';
+						update_post_meta( $gallery->ID, FOOGALLERY_META_SETTINGS, $gallery->settings );
+						$gallery_update_count++;
+					}
+				}
+
+				//return JSON here
+				$json_array = array(
+					'success' => true,
+					'updated' => sprintf( _n( '1 FooGallery successfully updated to use FooBox!', '%s FooGalleries successfully updated to use FooBox!', $gallery_update_count, 'foobox-image-lightbox' ), $gallery_update_count )
+				);
+
+				header('Content-type: application/json');
+				echo json_encode($json_array);
+				die;
+			}
+		}
+
+		public function admin_notice_foogallery_lightboxes_inline_js() {
+			if ( ! current_user_can( 'activate_plugins' ) || ! class_exists( 'FooGallery_Plugin' ) )
+				return;
+
+			if ( get_user_meta( get_current_user_id(), 'foogallery_fooboxfree_lightbox_ignore' ) )
+				return;
+
+			if ( 'settings_page_fooboxfree-help' === foo_current_screen_id() )
+				return;
+
+			?>
+			<script type="text/javascript">
+				( function ( $ ) {
+					$( document ).ready( function () {
+						$( '.foobox-foogallery-lightboxes.is-dismissible' )
+							.on( 'click', '.notice-dismiss', function ( e ) {
+								e.preventDefault();
+								$.post( ajaxurl, {
+									action: 'foobox_foogallery_lightboxes_ignore_notice',
+									url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
+									_wpnonce: '<?php echo wp_create_nonce( 'foobox_foogallery_lightboxes_ignore_notice' ); ?>'
+								} );
+							} )
+
+							.on( 'click', '.foobox-foogallery-update-lightbox', function ( e ) {
+								e.preventDefault();
+								var $spinner = $(this).parents('div:first').find('.spinner');
+								$spinner.addClass('is-active');
+
+								var data = 'action=foobox_foogallery_lightboxes_update' +
+									'&foobox_foogallery_lightboxes_update_nonce=<?php echo wp_create_nonce( 'foobox_foogallery_lightboxes_update' ); ?>' +
+									'&_wp_http_referer=' + encodeURIComponent($('input[name="_wp_http_referer"]').val());
+
+								$.ajax({
+									type: "POST",
+									url: ajaxurl,
+									data: data,
+									success: function(data) {
+										$('.foobox-foogallery-lightboxes').slideUp();
+										alert(data.updated);
+										$spinner.removeClass('is-active');
+									}
+								});
+							} );
+						} );
+				} )( jQuery );
+			</script>
+			<?php
+		}
+
+		/**
+		 * Check if a new version is now running and do some stuff!
+		 */
+		function new_version_check() {
+			if ( get_site_option( 'foobox-free-version' ) != FOOBOXFREE_VERSION ) {
+				//This code will run every time the plugin is updated
+
+				//clear some user meta, so our notices are shown again
+				delete_user_meta( get_current_user_id(), 'foogallery_fooboxfree_lightbox_ignore' );
+				delete_user_meta( get_current_user_id(), 'foogallery_did_you_know2' );
+				delete_user_meta( get_current_user_id(), 'foogallery_did_you_know' );
+
+				//set the current version, so that this does not run again until the next update!
+				update_site_option( 'foobox-free-version', FOOBOXFREE_VERSION );
+			}
+		}
+
+		/**
+		 * Fired when the plugin is activated.
+		 *
+		 * @since    1.0.7
+		 *
+		 * @param    boolean    $network_wide    True if WPMU superadmin uses
+		 *                                       "Network Activate" action, false if
+		 *                                       WPMU is disabled or plugin is
+		 *                                       activated on an individual blog.
+		 */
+		public static function activate( $network_wide ) {
+			if ( function_exists( 'is_multisite' ) && is_multisite() ) {
+				//do something for multisite!
+			} else {
+				self::single_activate( false );
+			}
+		}
+
+		/**
+		 * Fired for each blog when the plugin is activated.
+		 *
+		 * @since    1.0.0
+		 */
+		private static function single_activate( $multisite = true ) {
+			if ( false === $multisite ) {
+				//Make sure we redirect to the welcome page
+				set_transient( FOOBOXFREE_ACTIVATION_REDIRECT_TRANSIENT_KEY, true, 30 );
+			}
+		}
+
+		function check_for_redirect() {
+			// Bail if no activation redirect
+			if ( ! get_transient( FOOBOXFREE_ACTIVATION_REDIRECT_TRANSIENT_KEY ) ) {
+				return;
+			}
+
+			// Delete the redirect transient
+			delete_transient( FOOBOXFREE_ACTIVATION_REDIRECT_TRANSIENT_KEY );
+
+			// Bail if activating from network, or bulk
+			if ( is_network_admin() || isset($_GET['activate-multi']) ) {
+				return;
+			}
+
+			$url = admin_url( 'options-general.php?page=fooboxfree-help' );
+
+			wp_safe_redirect( $url );
+			exit;
+		}
+
+		function register_menu_items() {
+			add_submenu_page( null, __( 'Welcome to FooBox Free', 'foobox-image-lightbox' ), __( 'FooBox Free Help', 'foobox-image-lightbox' ), 'manage_options', 'fooboxfree-help', array( $this, 'render_page_fooboxfree_help' ) );
+		}
+
+		function render_page_fooboxfree_help() {
+			require_once FOOBOXFREE_PATH . 'includes/view-help.php';
 		}
 	}
 }

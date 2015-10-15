@@ -14,7 +14,7 @@ if ( !class_exists( 'FooGallery_FooBox_Free_Extension' ) ) {
 		}
 
 		function add_lightbox($lightboxes) {
-			$lightboxes['foobox-free'] = __( 'FooBox Free', 'foobox-free' );
+			$lightboxes['foobox-free'] = __( 'FooBox Free', 'foobox-image-lightbox' );
 			return $lightboxes;
 		}
 

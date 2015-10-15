@@ -10,17 +10,17 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 		function create_settings() {
 			//region General Tab
-			$tabs['general'] = __('General', 'foobox-free');
+			$tabs['general'] = __('General', 'foobox-image-lightbox');
 
 			$sections['attach'] = array(
 				'tab' => 'general',
-				'name' => __('What do you want to attach FooBox to?', 'foobox-free')
+				'name' => __('What do you want to attach FooBox to?', 'foobox-image-lightbox')
 			);
 
 			$settings[] = array(
 				'id'      => 'enable_galleries',
-				'title'   => __( 'WordPress Galleries', 'foobox-free' ),
-				'desc'    => __( 'Enable FooBox for all WordPress image galleries.', 'foobox-free' ),
+				'title'   => __( 'WordPress Galleries', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Enable FooBox for all WordPress image galleries.', 'foobox-image-lightbox' ),
 				'default' => 'on',
 				'type'    => 'checkbox',
 				'section' => 'attach',
@@ -29,8 +29,8 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$settings[] = array(
 				'id'      => 'enable_captions',
-				'title'   => __( 'WordPress Images With Captions', 'foobox-free' ),
-				'desc'    => __( 'Enable FooBox for all WordPress images that have captions.', 'foobox-free' ),
+				'title'   => __( 'WordPress Images With Captions', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Enable FooBox for all WordPress images that have captions.', 'foobox-image-lightbox' ),
 				'default' => 'on',
 				'type'    => 'checkbox',
 				'section' => 'attach',
@@ -39,8 +39,8 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$settings[] = array(
 				'id'      => 'enable_attachments',
-				'title'   => __( 'Attachment Images', 'foobox-free' ),
-				'desc'    => __( 'Enable FooBox for all media images included in posts or pages.', 'foobox-free' ),
+				'title'   => __( 'Attachment Images', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Enable FooBox for all media images included in posts or pages.', 'foobox-image-lightbox' ),
 				'default' => 'on',
 				'type'    => 'checkbox',
 				'section' => 'attach',
@@ -49,14 +49,14 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$sections['show_love'] = array(
 				'tab' => 'settings',
-				'name' => __('Show us some love! We would really appreciate your support.', 'foobox-free')
+				'name' => __('Show us some love! We would really appreciate your support.', 'foobox-image-lightbox')
 			);
 
 			$settings[] = array(
 				'id'      => 'powered_by_link',
-				'title'   => __( 'Show "powered by" link', 'foobox-free' ),
-				'desc'    => __( 'Help support this free plugin by displaying a small "powered by foobox" link under the lightbox.', 'foobox-free' )
-					. '<br />' . __('View the demo on this page to see the "powered by" link in action.', 'foobox-free'),
+				'title'   => __( 'Show "powered by" link', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Help support this free plugin by displaying a small "powered by foobox" link under the lightbox.', 'foobox-image-lightbox' )
+					. '<br />' . __('View the demo on this page to see the "powered by" link in action.', 'foobox-image-lightbox'),
 				'default' => 'off',
 				'type'    => 'checkbox',
 				'section' => 'show_love',
@@ -65,14 +65,14 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$become_affiliate_link = sprintf( '<br /><a target="_blank" href="%s">%s</a> %s',
 				Foobox_Free::BECOME_AFFILIATE_URL,
-				__( 'Become an affiliate', 'foobox-free' ),
-				__( ' and paste in your affiliate URL above.', 'foobox-free' )
+				__( 'Become an affiliate', 'foobox-image-lightbox' ),
+				__( ' and paste in your affiliate URL above.', 'foobox-image-lightbox' )
 			);
 
 			$settings[] = array(
 				'id'      => 'powered_by_url',
-				'title'   => __( 'Affiliate Link', 'foobox-free' ),
-				'desc'    => __( 'If you show the "powered by" link, you can promote FooBox and make a commission from sales. Everybody wins!', 'foobox-free' ) . $become_affiliate_link,
+				'title'   => __( 'Affiliate Link', 'foobox-image-lightbox' ),
+				'desc'    => __( 'If you show the "powered by" link, you can promote FooBox and make a commission from sales. Everybody wins!', 'foobox-image-lightbox' ) . $become_affiliate_link,
 				'type'    => 'text',
 				'section' => 'show_love',
 				'tab'     => 'general'
@@ -80,13 +80,13 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$sections['settings'] = array(
 				'tab' => 'settings',
-				'name' => __('Display Settings', 'foobox-free')
+				'name' => __('Display Settings', 'foobox-image-lightbox')
 			);
 
 			$settings[] = array(
 				'id'      => 'fit_to_screen',
-				'title'   => __( 'Fit To Screen', 'foobox-free' ),
-				'desc'    => __( 'Force smaller images to fit the screen dimensions.', 'foobox-free' ),
+				'title'   => __( 'Fit To Screen', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Force smaller images to fit the screen dimensions.', 'foobox-image-lightbox' ),
 				'default' => 'off',
 				'type'    => 'checkbox',
 				'section' => 'settings',
@@ -95,8 +95,8 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$settings[] = array(
 				'id'      => 'hide_scrollbars',
-				'title'   => __( 'Hide Page Scrollbars', 'foobox-free' ),
-				'desc'    => __( 'Hide the page\'s scrollbars when FooBox is visible.', 'foobox-free' ),
+				'title'   => __( 'Hide Page Scrollbars', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Hide the page\'s scrollbars when FooBox is visible.', 'foobox-image-lightbox' ),
 				'default' => 'on',
 				'type'    => 'checkbox',
 				'section' => 'settings',
@@ -105,8 +105,8 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$settings[] = array(
 				'id'      => 'show_count',
-				'title'   => __( 'Show Counter', 'foobox-free' ),
-				'desc'    => __( 'Shows a counter under the FooBox modal when viewing a gallery of images.', 'foobox-free' ),
+				'title'   => __( 'Show Counter', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Shows a counter under the FooBox modal when viewing a gallery of images.', 'foobox-image-lightbox' ),
 				'default' => 'on',
 				'type'    => 'checkbox',
 				'section' => 'settings',
@@ -114,8 +114,8 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 			);
 			$settings[] = array(
 				'id'      => 'captions_show_on_hover',
-				'title'   => __( 'Show Captions On Hover', 'foobox-free' ),
-				'desc'    => __( 'Only show the caption when hovering over the image.', 'foobox-free' ),
+				'title'   => __( 'Show Captions On Hover', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Only show the caption when hovering over the image.', 'foobox-image-lightbox' ),
 				'type'    => 'checkbox',
 				'section' => 'settings',
 				'tab'     => 'general'
@@ -123,9 +123,9 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$settings[] = array(
 				'id'      => 'error_message',
-				'title'   => __( 'Error Message', 'foobox-free' ),
-				'desc'    => __( 'The error message to display when an image has trouble loading.', 'foobox-free' ),
-				'default' => __( 'Could not load the item', 'foobox-free' ),
+				'title'   => __( 'Error Message', 'foobox-image-lightbox' ),
+				'desc'    => __( 'The error message to display when an image has trouble loading.', 'foobox-image-lightbox' ),
+				'default' => __( 'Could not load the item', 'foobox-image-lightbox' ),
 				'type'    => 'text',
 				'section' => 'settings',
 				'tab'     => 'general'
@@ -135,12 +135,12 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			//region Advanced Tab
 
-			$tabs['advanced'] = __('Advanced', 'foobox-free');
+			$tabs['advanced'] = __('Advanced', 'foobox-image-lightbox');
 
 			$settings[] = array(
 				'id'      => 'close_overlay_click',
-				'title'   => __( 'Close On Overlay Click', 'foobox-free' ),
-				'desc'    => __( 'Should the FooBox lightbox close when the overlay is clicked.', 'foobox-free' ),
+				'title'   => __( 'Close On Overlay Click', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Should the FooBox lightbox close when the overlay is clicked.', 'foobox-image-lightbox' ),
 				'default' => 'on',
 				'type'    => 'checkbox',
 				'tab'     => 'advanced'
@@ -148,16 +148,16 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			$settings[] = array(
 				'id'      => 'disable_others',
-				'title'   => __( 'Disable Other Lightboxes', 'foobox-free' ),
-				'desc'    => __( 'Certain themes and plugins use a hard-coded lightbox, which make it very difficult to override.<br>By enabling this setting, we inject a small amount of javascript onto the page which attempts to get around this issue.<br>But please note this is not guaranteed, as we cannot account for every lightbox solution out there :)', 'foobox-free' ),
+				'title'   => __( 'Disable Other Lightboxes', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Certain themes and plugins use a hard-coded lightbox, which make it very difficult to override.<br>By enabling this setting, we inject a small amount of javascript onto the page which attempts to get around this issue.<br>But please note this is not guaranteed, as we cannot account for every lightbox solution out there :)', 'foobox-image-lightbox' ),
 				'type'    => 'checkbox',
 				'tab'     => 'advanced'
 			);
 
 			$settings[] = array(
 				'id'      => 'enable_debug',
-				'title'   => __( 'Enable Debug Mode', 'foobox-free' ),
-				'desc'    => __( 'Show an extra debug information tab to help debug any issues.', 'foobox-free' ),
+				'title'   => __( 'Enable Debug Mode', 'foobox-image-lightbox' ),
+				'desc'    => __( 'Show an extra debug information tab to help debug any issues.', 'foobox-image-lightbox' ),
 				'type'    => 'checkbox',
 				'tab'     => 'advanced'
 			);
@@ -169,36 +169,25 @@ if ( !class_exists( 'FooBox_Free_Settings' ) ) {
 
 			if ( $foobox_free->options()->is_checked( 'enable_debug', false ) ) {
 
-				$tabs['debug'] = __('Debug', 'foobox-free');
+				$tabs['debug'] = __('Debug', 'foobox-image-lightbox');
 
 				$settings[] = array(
 					'id'      => 'debug_output',
-					'title'   => __( 'Debug Information', 'foobox-free' ),
+					'title'   => __( 'Debug Information', 'foobox-image-lightbox' ),
 					'type'    => 'debug_output',
 					'tab'     => 'debug'
 				);
 			}
 			//endregion
 
-			//region 'FooBot Says' tab
-			$tabs['foobot_says'] = __('FooBot Says...', 'foobox-free');
-
-			$settings[] = array(
-				'id'    => 'upgrade',
-				'title' => '',
-				'type'  => 'foobot_says',
-				'tab'   => 'foobot_says'
-			);
-			//endregion
-
 			//region Upgrade tab
-			$tabs['upgrade'] = __('Upgrade to PRO!', 'foobox-free');
+			$tabs['upgrade'] = __('Upgrade to PRO!', 'foobox-image-lightbox');
 
-			$link = sprintf( '<p><a target="_blank" href="%s">%s</a></p><br>', FooBox_Free::FOOBOX_URL, __('Upgrade to the PRO version!', 'foobox-free') );
+			$link = sprintf( '<p><a target="_blank" href="%s">%s</a></p><br>', FooBox_Free::FOOBOX_URL, __('Upgrade to the PRO version!', 'foobox-image-lightbox') );
 
 			$settings[] = array(
 				'id'    => 'upgrade',
-				'title' => $link . __('There are tons of reasons...', 'foobox-free'),
+				'title' => $link . __('There are tons of reasons...', 'foobox-image-lightbox'),
 				'type'  => 'upgrade',
 				'tab'   => 'upgrade'
 			);
