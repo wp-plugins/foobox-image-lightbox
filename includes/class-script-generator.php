@@ -170,7 +170,7 @@ if ( !class_exists( 'FooBox_Free_Script_Generator' ) ) {
 			$ready_event = 'FooBox.ready';
 
 			$preload = '  //preload the foobox font
-  jQuery("body").append("<span style=\"font-family:\'foobox\'; color:transparent; position:absolute; top:-1000em;\">f</span>");';
+  jQuery("body").append("<span style=\"font-family:\'foobox\'; color:transparent; position:absolute; top:-1000em;\" aria-hidden="true">f</span>");';
 
 			$js .= '
   };
